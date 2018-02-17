@@ -1,0 +1,10 @@
+auto-save-list/*
+elpa/*
+eshell/*
+snippets/*
+thumbs/*
+ac-comphist.dat
+recentf
+*~
+#*#
+config.el
