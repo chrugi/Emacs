@@ -1,0 +1,905 @@
+#+TITLE: Emacs Configuration
+#+SUBTITLE: An Explanation of my peronal config
+#+AUTHOR: Christian Sangvik
+#+EMAIL: christian.sangvik@gmx.ch
+#+STARTUP: content
+
+* Introduction
+
+  Welcome to my GNU Emacs configuration file.
+
+  My effort was to make a readable configuration file for my GNU Emacs, that can
+  be easily portet to other system, set itself up and leave the user with a
+  better understanding of what does what in this config, and why it is used.
+
+  To make this configuration work, we have to set up a special init file for
+  emacs, like "~/.emacs.d/init.el" or "~/.emacs" file. This file normally holds
+  all the configuration that goes into Emacs itself. But we rather want to use
+  this very file you are reading right now, since it aims at describing the
+  configuration to you, and therefore a better understanding of the
+  configuration by you.
+
+  In order to get this to work we have to set up two major points.
+
+  - The package manager
+
+    We need the package manager to be functional before executing the code in
+    this configuration file, because my configuration depends on it. At least
+    the manager itself, with the melpa repository set up and use-package need to
+    be running before the rest of the configuration is loaded.
+
+  - The parser for this configuration
+    
+    Emacs contains the org-mode package, a really powerful tool, which we will
+    discuss later on. For the short: org-mode let's us do exactly, what we want
+    with this configuration. We can document our setting in normal text and have
+    codeblocks which then can be automatically parsed with org-babel.
+
+  Resulting of these requirements, our emacs init file needs the following code:
+
+  #+BEGIN_SRC emacs-lisp
+    ;; Put these lines in your "~/.emacs" or "~/.emacs.d/init.el" file.
+    ;; You also have to uncomment and adjust them to the location of the
+    ;; config-file on your system.
+
+    ;; (require 'package)
+    ;; (setq package-enable-at-startup nil)
+    ;; (add-to-list 'package-archives
+    ;;              '("melpa" . "https://melpa.org/packages/"))
+    ;; (package-initialize)
+    ;; (unless (package-installed-p 'use-package)
+    ;;   (package-refresh-contents)
+    ;;   (package-install 'use-package))
+
+    ;; (org-babel-load-file (expand-file-name "~/.config/Emacs/emacs-config.org"))
+  #+END_SRC
+
+  Without the commands being commented out of course. I have to comment it out
+  here, since it would render an infinite circle of insertions and executions of
+  the same code blocks over and over again.
+
+  Simply copy this text into your personal emacs init file, and remove the
+  leading semicolons from the line =(require 'package)= on.
+
+  The upper part set's up the package manager, whereas the last line instructs
+  emacs to parse our configuration file. We will discuss most of these settings
+  later on in this configuration without having them active again.
+
+  I have my configuration file lying in "~/.config/Emacs/emacs-config.org" and
+  my GNU Emacs init file is under "~/.emacs". If your paths alter, you might
+  have to change them manually in the last line.
+  
+  That being done, we now can use this very file for our configuration. You can
+  visit this file in my [[https://github.com/chrugi/Dotfiles/][Github repository]].
+
+  I come from using vim as my main editor, and try to adapt to the
+  emacs-workflow as good as I can. You might as well encounter some parts in my
+  configuration that give you the feeling, that I'm not quite there yet.
+
+* User Information
+
+  It is necessary for certain packages and commands to work, that you specify
+  your name and Email address. If you do so, you have filled in the proper
+  values in the header for Mails you send from emacs.
+
+  #+BEGIN_SRC emacs-lisp
+    (setq user-full-name "Christian Sangvik")
+    (setq user-mail-address "christian.sangvik@gmx.ch")
+  #+END_SRC
+
+* General
+
+** Packages
+
+*** Package Manager
+
+    Getting the Package manager running is very important to do as early as
+    possible, since other configuration depends on the individual
+    packages. Therefore these steps should already have taken place as mentioned
+    in the introduction in your emacs init file.
+
+    This line loads the package-manager "package" that comes with emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (require 'package)
+    #+END_SRC
+
+    Then we set Emacs up to not automatically enable all the packages at
+    startup.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (setq package-enable-at-startup nil)
+    #+END_SRC
+
+    The official repository of the GNU Emacs project, "elpa", gives us a bunch
+    of packages, but is rather limited. Therefore we setup another repository as
+    well to get our packages from. This repository is called "melpa". You can
+    visit their website [[https://melpa.org/][here]]. You can easily add other repositories as well,
+    using the same syntax. I would recommend to do this in your emacs init file.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (add-to-list 'package-archives
+      ;;              '("melpa" . "https://melpa.org/packages/"))
+    #+END_SRC
+
+    After setting up the packagemanager, we have to initialize it.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (package-initialize)
+    #+END_SRC
+
+*** Package Helper
+
+    Now, that we have set up the package manager itself, we can introduce
+    several helper packages, which simplify installing, configuring and using
+    other packages.
+
+**** use-package
+
+     "use-package" is a great package helper, since it does allow to check on
+     startup, wheter a package is installed or not, and does not blindfold load
+     all the packages that we might not even use into the memory, and thus
+     significantly speed up the starting process of emacs.
+
+     Since this still is part of the bootstrap, we have this in the .emacs file
+     directly.
+
+     #+BEGIN_SRC emacs-lisp
+       ;; (unless (package-installed-p 'use-package)
+       ;;   (package-refresh-contents)
+       ;;   (package-install 'use-package))
+     #+END_SRC
+
+     This does essentially check, wheter the package already is installed. If
+     not it will update the package list from the different repositories and
+     then install it. From now on use-package itself will give us this
+     functionality, besides some more benefits.
+
+**** try
+
+     Try is the first package that is configured by use-package and is not part
+     of the bootstrap.
+
+     In order to not have to install every package that we might want to try, we
+     install a package called "try", which gives us the ability to temporarely
+     run the package we want to try out, without actually installing it in the
+     system.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package try
+         :ensure t)
+     #+END_SRC
+
+     You can then simply try a package with "M-x try" followed by the name of
+     the package.
+
+     the =:ensure t= part you will meet in almost every package we configure
+     through use-package. It simply means, that use-package will check at
+     boottime whether the package executables are available, and if not will
+     install them.
+
+* which-key
+
+  In order to remember which keypress shortcuts there are, we install a
+  package called which-key, that would show us suggestions about shortcuts
+  that would conclude the beginning that we typed.
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package which-key
+      :ensure t
+      :config (which-key-mode))
+  #+END_SRC
+
+** Server
+
+   If we want to launch the emacs-server on emacs-startup, we activate this
+   function and then connect to it using emacsclient. The server running gives
+   us the ability to have multiple clients connected to the very same emacs
+   instance and by that the same buffers, settings and stuff.
+
+   I have my i3 setup configured to launch the server at startup with something
+   like "exec --no-startup-id emacs --daemon" and then have the keyboard
+   shortcut that before launched emacs set to launch "emacsclient -c". With this
+   i do not need this line anymore, since the server is already running on
+   logon.
+
+   I really recommend to run an emacs-server at startup of your work in emacs or
+   login.
+
+   You can connect to your emacs-server on the commandline via emacsclient -t".
+
+   It might throw errors on you, if you try to start multiple emacs-servers. So
+   if you have this option active and then fire up multiple instances of emacs,
+   you will get this server collision. Rather use the client in these
+   circumstances. But why would you use different instances of emacs anyway?
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (server-start)
+   #+END_SRC
+
+** Prompt
+
+   Emacs often prompts you wheter you really want to do some things. By default
+   it only takes the answers "yes" or "no". This was really annoying to me. And
+   since I don't want to type that much, I have Emacs take "y" and "n" as
+   answers.
+
+   #+BEGIN_SRC emacs-lisp
+     (fset 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
+
+** Text wraping, line breaking, filling
+
+   Text files that are ment to be read by people should wrap the lines at about
+   80 characters, so that we can easily read them. The process that breaks a
+   line in the whitespace between two words, right befor a character threashold
+   is met is called "filling". Filling is no text wrap (wrapping text does not
+   change the lines, but rather displays it over the break of a line, with it
+   being on the same line in the file) but a hard linebreak.
+
+   This linebreak gives us some advantages in manipulating text, because we can
+   then navigate our text precisely.
+
+   But this behaviour is maybe not favourable in all situation. Source code in
+   various languages heavily depends on proper line-breaking. Therefore we
+   should not use automatic linebreak for these major modes, and only have our
+   textfiles breaking.
+
+*** Fill-column width
+
+   To setup the width of our fill-column we want to have, we define it globally.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq-default fill-column '80)
+   #+END_SRC
+
+*** Manual Filling
+
+    For maual filling we use the keyboard-shortcut "M-p". This will fill the
+    paragraph you are currently on.
+
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "M-p") 'fill-paragraph)
+    #+END_SRC
+
+*** Automatical Filling
+
+    Some modes can be set up to fill columns automatically. I want automatic
+    filling for every mode that relates to Text. We set up a hook to
+    automatically enable filling for major-modes related to files of that kind.
+
+    Here's a list of modes I have auto-filling turned on
+
+     - Text-mode
+     - Org-mode
+     - LaTeX-mode
+
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'text-mode-hook 'turn-on-auto-fill)
+      (add-hook 'org-mode-hook 'turn-on-auto-fill)
+      (add-hook 'latex-mode 'turn-on-auto-fill)
+      (add-hook 'tex-mode 'turn-on-auto-fill)
+    #+END_SRC
+
+** Undo
+
+   Until now, the hardest part in switching from vim to emacs was to say
+   good-bye to vims great undo features. If you haven't tried this you really
+   should.
+
+   I was not able to get along with emacs undo policy. for a redo do undo an
+   undo. That is fine if you want to redo the last undo immediately. But if you
+   don't see the problem with your undo just yet, this is going to be a
+   problem.
+
+   Luckily, as always in the emacs community, someone has already got a solution
+   to that. Undo-tree is a really great package. It let's you visually browse
+   your undo tree, and you can create different branches and even diff the
+   different points in this history. You absolutely need this package.
+
+   To load the graphical representation of your undo tree, we can bind a key to
+   undo-tree-visualize. In this config we bound "M-/" to that.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-tree
+       :ensure t
+       :bind
+       ("M-/" . undo-tree-visualize)
+       :init
+       (global-undo-tree-mode))
+   #+END_SRC
+
+** Buffer Manipulation
+
+*** Indirect Buffer Clone
+
+    We sometimes, especially when working with org-mode want to clone an indirect
+    buffer. To do so we simply can press "F2"
+
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-c i") 'clone-indirect-buffer)
+    #+END_SRC
+
+*** Buffer reverting
+
+    Sometimes we have to revert a buffer. Reverting means, that we kill the
+    changes we made in this particular buffer, and re-read it from the file it is
+    bound to. It is much like refreshing a webpage. Therefore I map <F5> to this
+    task.
+
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "<f5>") 'revert-buffer)
+    #+END_SRC
+
+* Behaviour
+
+** expand region
+
+   As it says, expand region will expand a region for further manipulation. This
+   expansion is based on semantics and will affect the marks of your selection.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package expand-region
+       :ensure t
+       :bind
+       ("C-=" . er/expand-region))
+   #+END_SRC
+
+** hungry-delete Mode
+
+   This mode will not only delete the next character, but all whitespace if you
+   are deleting whitespace
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package hungry-delete
+       :ensure t
+       :config
+       (global-hungry-delete-mode))
+   #+END_SRC
+
+** Aggressive indent
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package aggressive-indent
+       :ensure t
+       :config
+       (global-aggressive-indent-mode 1))
+   #+END_SRC
+
+** Buffer lists
+
+*** ibuffer
+
+    Instead of using the buffer list, we can also use ibuffer. To map it to the
+    standard keybinding we use the following code snippet. In order to have it open
+    in another window we use the last line only. Since I am used to that behaviour I
+    am going to use ibuffer in another window.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (defalias 'list-buffers 'ibuffer)
+      (defalias 'list-buffers 'ibuffer-other-window)
+    #+END_SRC
+
+*** Search
+
+**** swiper
+
+     Swiper is a really powerfull search tool for emacs, which makes navigation
+     through search really easy.
+
+     We need to install "counsel", a dependency first.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package counsel
+         :ensure t)
+       (use-package swiper
+         :ensure t
+         :config
+         (progn
+           (ivy-mode 1)
+           (setq ivy-use-virtual-buffers t)
+           (setq enable-recursive-minibuffers t)
+           (global-set-key "\C-s" 'swiper)
+           (global-set-key (kbd "C-c C-r") 'ivy-resume)
+           (global-set-key (kbd "<f6>") 'ivy-resume)
+           ;; (global-set-key (kbd "M-x") 'counsel-M-x)
+           (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+           (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+           (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+           (global-set-key (kbd "<f1> l") 'counsel-find-library)
+           (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+           (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+           (global-set-key (kbd "C-c g") 'counsel-git)
+           (global-set-key (kbd "C-c j") 'counsel-git-grep)
+           (global-set-key (kbd "C-c k") 'counsel-ag)
+           (global-set-key (kbd "C-x l") 'counsel-locate)
+           (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+           (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)))
+     #+END_SRC
+
+**** Avy
+
+     Avy is an on-screen character search to quickly jumpt to a Character for
+     further manipulation.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package avy
+         :ensure t
+         :bind ("M-s" . avy-goto-char))
+     #+END_SRC
+
+** Auto-complete
+
+*** auto-complete
+
+    Auto complete makes "M-/" more powerful, since it is alwasy there, you don't
+    have to call "dabbrev-expand ARG" by hand and gives some additional
+    features.
+
+    We configure and load it with
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package auto-complete
+        :ensure t
+        :init
+        (progn
+          (ac-config-default)
+          (global-auto-complete-mode t)))
+    #+END_SRC
+
+** Line Numbering
+
+   Turn on relative line numbering
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package nlinum-relative
+       :ensure t
+       :init
+       (global-nlinum-relative-mode 1))
+   #+END_SRC
+
+* Interface
+
+** Themes
+
+   Personally I don't like the standard theme very much. Emacs has many many
+   themes to install, but I'm pretty happy with one of the stock themes called
+   wombat. So wombat would be my default dark theme.
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (load-theme 'wombat t)
+   #+END_SRC
+
+   My personal preferred light theme is dichromacy.
+
+   #+BEGIN_SRC emacs-lisp
+     (load-theme 'dichromacy t)
+   #+END_SRC
+
+   The t (true) at the End of the expression tells Emacs to use "yes" to any
+   default options.
+
+** Bars
+
+   Since we do not need the toolbar or the scrollbar, we have them off. But I
+   explicitly want the menu bar for my time as beginner.
+
+   #+BEGIN_SRC emacs-lisp
+     (tool-bar-mode -1)
+     (menu-bar-mode 1)
+     (scroll-bar-mode -1)
+   #+END_SRC
+
+** Startup Screen
+
+   To not Show the Startup screen everytime we launch Emacs, we simply inhibit
+   it.
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (setq inhibit-startup-message t)
+   #+END_SRC
+
+** Cursor
+
+   We can make the cursor a horizontal bar all the time. personally I do not
+   like this very much.
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (set-default 'cursor-type 'hbar)
+   #+END_SRC
+
+** Status bar
+
+   We need to see which line we are on, but personally I also need to see in
+   which column I am
+
+   #+BEGIN_SRC emacs-lisp
+     (column-number-mode t)
+   #+END_SRC
+
+** beacon mode
+
+   Beacon mode shortly highlights the cursor position, when it moves. It by that
+   helps a lot to keep yourself oriented while fast moving the cursor.
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (use-package beacon
+     ;;   :ensure t
+     ;;   :config
+     ;;   (beacon-mode 1)
+     ;;   ;; (setq beacon-color "#666600")
+     ;;   )
+   #+END_SRC
+
+** horizontal line highlighting
+
+   we can highlight the line we currently are on with hl-mode
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (global-hl-line-mode t)
+   #+END_SRC
+
+* Modes
+
+** Input behaviour
+
+*** ido-mode
+
+    *Not needed*
+
+    Ido mode is a mode that would suggest completions and let emacs act more
+    intelligently on what you want. We can even more simplify our work by
+    letting ido-mode not use exact input.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (setq ido-enable-flex-matching t)
+      ;; (setq ido-everywhere t)
+      ;; (ido-mode 1)
+    #+END_SRC
+
+** Windows
+
+*** winner-mode
+
+    *Not needed*
+
+    winner-mode records your modifications tou your windows and let's you cycle
+    through the different states by hitting "C-c left" and "C-c right".
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (winner-mode 1)
+    #+END_SRC
+
+*** windmove
+
+    *Not needed*
+
+    windmove let's you focus windows by hitting "S-ARROW" in the respective
+    direction the Arrow points to. That means you can easily switch windows with
+    shift and the arrow-key-block instead of constantly hitting "C-x o". I
+    personally do not use this but rather load ace-window, which replaces this
+    functionality.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (windmove-default-keybindings)
+    #+END_SRC
+
+*** ace-window
+
+    Ace-window replaces the windmove functionality.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package ace-window
+        :ensure t
+        :init
+        (progn
+          (global-set-key [remap other-window] 'ace-window)
+          (custom-set-faces
+           '(aw-leading-char-face
+             ((t (:height 3.0)))))))
+    #+END_SRC
+
+** Display
+
+*** show-paren-mode
+
+    Show-paren-mode
+
+    #+BEGIN_SRC emacs-lisp
+      (show-paren-mode)
+    #+END_SRC
+
+** paredit
+
+   Paredit is a really mighty minor mode that keeps your programming syntax
+   correct at all times or at least dies trying.
+
+   Sadly, paredit-mode binds really many keys that work with org-mode. Therefore we
+   can not use paredit-mode within org-mode.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package paredit
+       :ensure t
+       :config
+       (progn
+         (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+         (add-hook 'latex-mode 'enable-paredit-mode)
+         (add-hook 'tex-mode 'enable-paredit-mode)))
+   #+END_SRC
+
+   Since it is very strict in handling quotes, parentheses, brackets, curly
+   brackets etc. it is not advisable to have it globally enabled, but rather
+   enable it for various different major modes.
+
+* Programming
+
+** Python
+
+*** Jedi
+
+    Jedi is an auto-completion set for python.
+
+    Maybe consider elpy
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (use-package jedi
+      ;;   :ensure t
+      ;;   :init
+      ;;   (add-hook 'python-mode-hook 'jedi:setup)
+      ;;   (add-hook 'python-mode-hook 'jedi:ac-setup))
+    #+END_SRC
+
+*** Elpy
+
+    Instead of using Jedi we can use Elpy Instead
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package elpy
+        :ensure t
+        :init
+        (elpy-enable))
+    #+END_SRC
+
+** iedit
+
+   iedit will sellect all occurences of the same word, and then let you
+   manipulate them simultaneously. By default it is bound to "C-;"
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package iedit
+       :ensure t)
+   #+END_SRC
+
+* Org Mode Configuration
+
+** Syntax highlighting
+
+   #+BEGIN_SRC emacs-lisp
+     (setq org-src-fontify-natively t)
+   #+END_SRC
+
+** Org Mode general
+
+   Here fit some general org-mode settings
+
+   #+BEGIN_SRC emacs-lisp
+     (setq org-directory  (quote "~/Documents/org/"))
+     (setq org-default-notes-file (concat org-directory "/notes.org"))
+     (setq org-startup-folded (quote overview))
+     ;; (setq org-startup-indented t)
+     ;; (setq org-hide-leading-stars t)
+     (setq org-agenda-files (list "~/Documents/org/agenda.org"))
+     (setq org-export-coding-system 'utf-8)
+   #+END_SRC
+
+   We can have auto completion with org-ac
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package org-ac
+       :ensure t
+       :config
+       (org-ac/config-default))
+   #+END_SRC
+
+** Org Capture
+
+   Org capture presents beautifully easy interfaces to quickly catch some notes
+   and store them according to the presets defined. To access it we use "C-c c".
+
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "<f6>") 'org-capture)
+     (global-set-key (kbd "C-c c") 'org-capture)
+   #+END_SRC
+
+   Then we have to configure our preset structure.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq org-capture-templates
+           (quote
+            (("t" "ToDo Task" entry
+              (file+headline "~/Documents/org/todo.org" "Capture")
+              (file "~/Templates/org-capture/todo.org")
+              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+             ("a" "Appointment" entry
+              (file+olp+datetree "~/Documents/org/agenda.org")
+              (file "~/Templates/org-capture/appointment.org")
+              :empty-lines-before 1 :empty-lines-after 1)
+             ("n" "Note" entry
+              (file+olp+datetree "~/Documents/org/notes.org")
+              (file "~/Templates/org-capture/note.org")
+              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+             ("j" "Journal" entry
+              (file+olp+datetree "~/Documents/org/journal.org")
+              (file "~/Templates/org-capture/journal.org")
+              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+             ("v" "Video Reference" entry
+              (file+headline "~/Documents/org/references.org" "Video")
+              (file "~/Templates/org-capture/reference-video.org")
+              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+             ("l" "Link Reference" entry
+              (file+headline "~/Documents/org/references.org" "Link")
+              (file "~/Templates/org-capture/reference-link.org")
+              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+             ("x" "Text Reference" entry
+              (file+headline "~/Documents/org/references.org" "Text")
+              (file "~/Templates/org-capture/reference-text.org")
+              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+             ("m" "Music Reference" entry
+              (file+headline "~/Documents/org/references.org" "Music")
+              (file "~/Templates/org-capture/reference-music.org")
+              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+             ("g" "Generic Reference" entry
+              (file+headline "~/Documents/org/references.org" "Generic")
+              (file "~/Templates/org-capture/reference-generic.org")
+              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+             ("r" "Reference Architecture" entry
+              (file+headline "~/Documents/org/references-architecture.org" "Capture")
+              (file "~/Templates/org-capture/architecture.org")
+              :clock-in :empty-lines-before 2 :empty-lines-after 2))))
+   #+END_SRC
+
+   By this we have Templates for:
+
+   - Todo tasks
+   - Appointments
+   - General notes
+   - Journal entries
+   - Video references
+   - Text references
+   - Music references
+   - Hyperlink references
+   - Architecture references
+   - Generic references
+
+** Org-Agenda
+
+** Org babel
+
+** Represenatation
+
+*** org-bullets
+
+    org mode gives us a perfect outlinig tool. but to have it look a little
+    better and show us the outline in a more precise way, we might install
+    org-bullets.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets
+        :ensure t
+        :config
+        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    #+END_SRC
+
+* Version Control
+
+** Magit
+
+   [[https://magit.vc/][Magit]] is a really powerful git frontent for Emacs. I won't discuss git
+   here. But if you don't know the benefits of it you should definitely check it
+   out. Here's the [[https://git-scm.com/][link]] to their website. The best documenation you can find
+   [[https://git-scm.com/doc][here]] with their [[https://git-scm.com/book/en/v2][book]].
+
+   We don't need shortcuts for everything in magit. We can call all the
+   functions from it's status screen, where you should start working anyway.
+
+   We bind "C-x g" globally to magit-status.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :ensure t
+       :bind
+       ("C-x g" . magit-status))
+   #+END_SRC
+
+** Neo tree
+
+   Neotree gives us a visual directory tree.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package neotree
+       :ensure t
+       :bind
+       ("<f8>" . neotree-toggle))
+   #+END_SRC
+
+* Misc
+
+** Dired
+
+*** Regular expressions
+
+    The emacs standard syntax for regular expressions kind of sucks. therefore
+    we install a package called =pcre2el=
+    
+    #+BEGIN_SRC emacs-lisp
+      (use-package pcre2el
+        :ensure t
+        :config
+        (pcre-mode))
+    #+END_SRC
+
+* E-Mail
+
+** Wanderlust
+
+   Wanderlust emacs client.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package wanderlust
+       :ensure t)
+   #+END_SRC
+
+   Confuguring further
+
+   #+BEGIN_SRC emacs-lisp
+     (defun fetch-mail ()
+       (interactive)
+       (shell-command "offlineimap"))
+     (global-set-key "\C-x\M-m" 'fetch-mail)
+   #+END_SRC
+
+* Latex Integration
+
+** Org-ref
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package org-ref
+       :ensure t)
+   #+END_SRC
+
+   
+* Legacy Configuration
+
+** Dired find alternate file
+
+   The dired find alternate file option will open directories in the same buffer
+   as the present one and thus prevents buffer cluttering.
+
+   #+BEGIN_SRC emacs-lisp
+     (put 'dired-find-alternate-file 'disabled nil)
+   #+END_SRC
+
+* Org Babel
+
+  Load Language interpreter for different languages
+
+  #+BEGIN_SRC emacs-lisp
+    (setq org-babel-load-languages (quote (
+                                           (python . t)
+                                           (sh . t)
+                                           (C . t))))
+  #+END_SRC
+
+  Further we don't want to always confirm execution of our code.
+
+  #+BEGIN_SRC emacs-lisp
+    (setq org-confirm-babel-evaluate nil)
+  #+END_SRC
+
+* Mail
+
+  #+BEGIN_SRC emacs-lisp
+    (setq send-mail-function (quote smtpmail-send-it))
+    (setq smtpmail-smtp-server "mail.gmx.com")
+    (setq smtpmail-smtp-service 25)
+  #+END_SRC
