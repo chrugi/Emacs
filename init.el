@@ -1,8 +1,10 @@
 (require 'package)
 (require 'cl)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+	("melpa" . "https://melpa.org/packages/")
+	("org" . "https://orgmode.org/elpa/")))
 (package-initialize)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
