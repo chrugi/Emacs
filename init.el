@@ -30,3 +30,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(aw-leading-char-face ((t (:height 3.0)))))
+
+(if (boundp 'ns-command-modifier)
+    (setq ns-command-modifier 'meta))
+
+(if (boundp 'ns-option-modifier)
+    (setq ns-option-modifier nil))
