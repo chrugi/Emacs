@@ -845,17 +845,17 @@
    Wanderlust emacs client.
 
    #+BEGIN_SRC emacs-lisp
-     (use-package wanderlust
-       :ensure t)
+     ;; (use-package wanderlust
+     ;;   :ensure t)
    #+END_SRC
 
    Confuguring further
 
    #+BEGIN_SRC emacs-lisp
-     (defun fetch-mail ()
-       (interactive)
-       (shell-command "offlineimap"))
-     (global-set-key "\C-x\M-m" 'fetch-mail)
+     ;; (defun fetch-mail ()
+     ;;   (interactive)
+     ;;   (shell-command "offlineimap"))
+     ;; (global-set-key "\C-x\M-m" 'fetch-mail)
    #+END_SRC
 
 * Latex Integration
