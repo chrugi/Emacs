@@ -83,8 +83,8 @@
   values in the header for Mails you send from emacs.
 
   #+BEGIN_SRC emacs-lisp
-    (setq user-full-name "Christian Sangvik")
-    (setq user-mail-address "christian.sangvik@gmx.ch")
+    (setq user-full-name "Melanie Bühler")
+    (setq user-mail-address "meli.buehler@gmail.com")
   #+END_SRC
 
 * General
@@ -108,7 +108,7 @@
     startup.
 
     #+BEGIN_SRC emacs-lisp
-      ;; (setq package-enable-at-startup nil)
+      (setq package-enable-at-startup nil)
     #+END_SRC
 
     The official repository of the GNU Emacs project, "elpa", gives us a bunch
@@ -259,7 +259,7 @@
     paragraph you are currently on.
 
     #+BEGIN_SRC emacs-lisp
-      (global-set-key (kbd "M-p") 'fill-paragraph)
+      (global-set-key (kbd "M-q") 'fill-paragraph)
     #+END_SRC
 
 *** Automatical Filling
@@ -751,11 +751,7 @@
              ("g" "Generic Reference" entry
               (file+headline "~/Documents/org/references.org" "Generic")
               (file "~/Templates/org-capture/reference-generic.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
-             ("r" "Reference Architecture" entry
-              (file+headline "~/Documents/org/references-architecture.org" "Capture")
-              (file "~/Templates/org-capture/architecture.org")
-              :clock-in :empty-lines-before 2 :empty-lines-after 2))))
+              :clock-in :empty-lines-before 1 :empty-lines-after 1))))
    #+END_SRC
 
    By this we have Templates for:
@@ -768,7 +764,6 @@
    - Text references
    - Music references
    - Hyperlink references
-   - Architecture references
    - Generic references
 
 ** Org-Agenda
@@ -949,7 +944,5 @@
 * Mail
 
   #+BEGIN_SRC emacs-lisp
-    (setq send-mail-function (quote smtpmail-send-it))
-    (setq smtpmail-smtp-server "mail.gmx.com")
-    (setq smtpmail-smtp-service 25)
+    ;; (setq send-mail-function (quote smtpmail-send-it))
   #+END_SRC
