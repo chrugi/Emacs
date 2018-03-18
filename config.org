@@ -908,8 +908,8 @@
 
      (add-to-list 'org-latex-default-packages-alist '("" "natbib" "") t)
      (add-to-list 'org-latex-default-packages-alist
-                  '("linktocpage,pdfstartview=FitH,colorlinks,linkcolor=blue,
-     anchorcolor=blue,citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
+                  '("linktocpage,pdfstartview=FitH,colorlinks,linkcolor=black,
+     anchorcolor=black,citecolor=black,filecolor=black,menucolor=black,urlcolor=black"
                     "hyperref" nil)
                   t)
 
