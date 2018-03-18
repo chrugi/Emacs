@@ -894,3 +894,30 @@
   #+BEGIN_SRC emacs-lisp
     ;; (setq send-mail-function (quote smtpmail-send-it))
   #+END_SRC
+* org export LaTeX
+
+  #+BEGIN_SRC emacs-lisp
+(with-eval-after-load "ox-latex"
+  (add-to-list 'org-latex-classes
+	       '("koma-article" "\\documentclass{scrartcl}"
+		 ("\\section{%s}" . "\\section*{%s}")
+		 ("\\subsection{%s}" . "\\subsection*{%s}")
+		 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+  #+END_SRC
+
+  Add Koma-Report
+
+  #+BEGIN_SRC emacs-lisp :exports none :results silent
+    (with-eval-after-load "ox-latex"
+      (add-to-list 'org-latex-classes
+                   '("koma-report" "\\documentclass{scrreprt}"
+                     ("\\part{%s}" . "\\part*{%s}")
+                     ("\\chapter{%s}" . "\\chapter*{%s}")
+                     ("\\section{%s}" . "\\section*{%s}")
+                     ("\\subsection{%s}" . "\\subsection*{%s}")
+                     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                     ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                     ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+  #+END_SRC
