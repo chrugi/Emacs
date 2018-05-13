@@ -21,6 +21,9 @@
  '(custom-safe-themes
    (quote
     ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+ '(magit-fetch-arguments (quote ("--prune")))
+ '(magit-remote-arguments (quote ("-f")))
+ '(magit-tag-arguments (quote ("--sign")))
  '(package-selected-packages
    (quote
     (spacemacs-theme org-ref wanderlust pcre2el neotree magit org-bullets org-ac iedit elpy paredit ace-window nlinum-relative auto-complete avy counsel aggressive-indent hungry-delete expand-region undo-tree which-key try use-package))))
