@@ -10,3 +10,4 @@ recentf
 config.el
 url/*
 ido.last
+tramp
