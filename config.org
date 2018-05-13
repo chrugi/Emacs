@@ -633,6 +633,15 @@
 
 * Programming
 
+** C Indentation
+
+   Use the BSD default style for C code.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq c-default-style "bsd")
+     (setq-default tab-width 8)
+   #+END_SRC
+
 ** Python
 
 *** Jedi
