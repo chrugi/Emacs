@@ -989,3 +989,8 @@
                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
   #+END_SRC
+* Tramp
+
+  #+BEGIN_SRC emacs-lisp
+    (setq tramp-default-method "ssh")
+  #+END_SRC
