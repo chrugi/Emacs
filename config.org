@@ -467,13 +467,13 @@
    wombat. So wombat would be my default dark theme.
 
    #+BEGIN_SRC emacs-lisp
-     ;; (load-theme 'wombat t)
+     (load-theme 'wombat t)
    #+END_SRC
 
    My personal preferred light theme is dichromacy.
 
    #+BEGIN_SRC emacs-lisp
-     (load-theme 'dichromacy t)
+     ;; (load-theme 'dichromacy t)
    #+END_SRC
 
    The t (true) at the End of the expression tells Emacs to use "yes" to any
