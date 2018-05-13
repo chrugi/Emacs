@@ -1,13 +1,26 @@
-auto-save-list/*
+# Editor files
+\#*\#
+*\~
+
+# Exported
+config.el
+
+# Remoting
+tramp
+
+# Packages
 elpa/*
+
+# History
+recentf
+auto-save-list/*
+ido.last
+
+# Shell
 eshell/*
+
+# General
+ac-comphist.dat
 snippets/*
 thumbs/*
-ac-comphist.dat
-recentf
-*~
-#*#
-config.el
 url/*
-ido.last
-tramp
