@@ -29,7 +29,7 @@
     be running before the rest of the configuration is loaded.
 
   - The parser for this configuration
-    
+
     Emacs contains the org-mode package, a really powerful tool, which we will
     discuss later on. For the short: org-mode let's us do exactly, what we want
     with this configuration. We can document our setting in normal text and have
@@ -68,7 +68,7 @@
   I have my configuration file lying in "~/.config/Emacs/emacs-config.org" and
   my GNU Emacs init file is under "~/.emacs". If your paths alter, you might
   have to change them manually in the last line.
-  
+
   That being done, we now can use this very file for our configuration. You can
   visit this file in my [[https://github.com/chrugi/Dotfiles/][Github repository]].
 
@@ -839,7 +839,7 @@
 
     The emacs standard syntax for regular expressions kind of sucks. therefore
     we install a package called =pcre2el=
-    
+
     #+BEGIN_SRC emacs-lisp
       (use-package pcre2el
         :ensure t
