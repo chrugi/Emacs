@@ -994,3 +994,20 @@
   #+BEGIN_SRC emacs-lisp
     (setq tramp-default-method "ssh")
   #+END_SRC
+
+* Emacs Bell
+
+  Turn off the annoying bell that triggers the Hardware-speaker.
+
+  A whole lot of information on it is to be found over [[https://www.emacswiki.org/emacs/AlarmBell][here]].
+
+  #+BEGIN_SRC emacs-lisp
+    (defun chrugi-bell-function ()
+      (unless (memq this-command
+		    '(isearch-abort abort-recursive-edit exit-minibuffer
+				    keyboard-quit mwheel-scroll down up next-line
+				    previous-line backward-char forward-char))
+	(ding)))
+
+    (setq ring-bell-function 'chrugi-bell-function)
+  #+END_SRC
