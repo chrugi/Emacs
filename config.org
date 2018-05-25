@@ -447,6 +447,22 @@
           (global-auto-complete-mode t)))
     #+END_SRC
 
+**** Auto-complete C headers
+
+     This will autocomplete c headers
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package auto-complete-c-headers
+         :ensure t)
+
+       (defun my:ac-c-header-init ()
+         (require 'auto-complete-c-headers)
+         (add-to-list 'ac-source-c-headers))
+
+       (add-hook 'c-mode-hook 'my:ac-c-header-init)
+       (add-hook 'c++-mode-hook 'my:ac-c-header-init)
+     #+END_SRC
+
 ** Line Numbering
 
    Turn on relative line numbering
@@ -1010,4 +1026,15 @@
 	(ding)))
 
     (setq ring-bell-function 'chrugi-bell-function)
+  #+END_SRC
+
+* yasnippet
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet
+      :ensure t
+      :init
+      (progn
+        (require 'yasnippet)
+        (yas-global-mode 1)))
   #+END_SRC
