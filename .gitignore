@@ -19,6 +19,10 @@ ido.last
 # Shell
 eshell/*
 
+# Browser
+# Bookmarks
+eww-bookmarks
+
 # General
 ac-comphist.dat
 snippets/*
