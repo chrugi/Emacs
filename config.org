@@ -1038,3 +1038,28 @@
         (require 'yasnippet)
         (yas-global-mode 1)))
   #+END_SRC
+
+* Browser
+
+** eww
+
+   Make eww the default Browser
+
+   #+BEGIN_SRC emacs-lisp
+     (setq browse-url-browser-function 'eww-browse-url)
+   #+END_SRC
+
+   Open URL in new buffer.
+
+   #+BEGIN_SRC emacs-lisp
+     (when (fboundp 'eww)
+       (defun xah-rename-eww-buffer ()
+         "Rename `eww-mode' buffer so sites open in nep page."
+         (let (($title (plist-get eww-data :title)))
+           (when (eq major-mode 'eww-mode )
+             (if $title
+                 (rename-buffer (concat "eww " $title) t)
+               (rename-buffer "eww" t)))))
+
+       (add-hook 'eww-after-render-hook 'xah-rename-eww-buffer))
+   #+END_SRC
