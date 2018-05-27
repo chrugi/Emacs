@@ -1080,3 +1080,12 @@
 
        (add-hook 'eww-after-render-hook 'xah-rename-eww-buffer))
    #+END_SRC
+
+* Evil-mode
+
+  Evil mode to have vim or vi like keybindings
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package evil
+      :ensure t)
+  #+END_SRC
