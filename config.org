@@ -76,6 +76,22 @@
   emacs-workflow as good as I can. You might as well encounter some parts in my
   configuration that give you the feeling, that I'm not quite there yet.
 
+* Package Manager
+
+  #+BEGIN_SRC emacs-lisp
+    (require 'package)
+    (require 'cl)
+    (setq package-enable-at-startup nil)
+    (setq package-archives
+	  '(("gnu" . "https://elpa.gnu.org/packages/")
+	    ("melpa" . "https://melpa.org/packages/")
+	    ("org" . "https://orgmode.org/elpa/")))
+    (package-initialize)
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))
+  #+END_SRC
+
 * User Information
 
   It is necessary for certain packages and commands to work, that you specify
