@@ -1,0 +1,42 @@
+* Mac OS X
+
+  These modifications are specifically for the macOS X 10.10.5 Yosemite. It is
+  possible, that many of them work for other versions of macOS as well, but
+  they're only tested on that particular system. Especially the remapping of the
+  Meta-key is different on newer versions of the Operating System.
+
+** Delete to trash
+
+   This variable lets emacs delete to the system trash rather than removing
+   files directly.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package osx-trash
+       :ensure t)
+
+     (when (eq system-type 'darwin)
+       (osx-trash-setup))
+     (setq delete-by-moving-to-trash t)
+   #+END_SRC
+
+** Do not perform "--dired" check on ls
+
+   This option might speed up the dired command, since macOS does not support
+   the =--dired= flag in it's =ls= command anyway.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq dired-use-ls-dired nil)
+   #+END_SRC
+
+** Remap Meta Key
+
+   Mac OS X uses the /alt/-key to get to certain characters. So the easiest way
+   to remain functional with special characters is to remap the Meta-key to
+   /Command/.
+
+   #+BEGIN_SRC emacs-lisp
+     (if (boundp 'ns-command-modifier)
+	 (setq ns-command-modifier 'meta))
+     (if (boundp 'ns-option-modifier)
+	 (setq ns-option-modifier nil))
+   #+END_SRC

@@ -8,5 +8,6 @@ recentf
 *~
 #*#
 config.el
+macosx-yosemite.el
 url/*
 ido.last
