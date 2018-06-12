@@ -12,46 +12,32 @@
   be easily portet to other system, set itself up and leave the user with a
   better understanding of what does what in this config, and why it is used.
 
+  I come from using vim as my main editor, and try to adapt to the
+  emacs-workflow as good as I can. You might as well encounter some parts in my
+  configuration that give you the feeling, that I'm not quite there yet.
+
   To make this configuration work, we have to set up a special init file for
   emacs, like "~/.emacs.d/init.el" or "~/.emacs" file. This file normally holds
-  all the configuration that goes into Emacs itself. But we rather want to use
-  this very file you are reading right now, since it aims at describing the
-  configuration to you, and therefore a better understanding of the
-  configuration by you.
+  all the configuration for GNU Emacs. But we rather want to use this very file
+  you are reading right now, since it aims at describing the configuration to
+  you, and therefore a better understanding of the configuration by
+  you. Therefore we have to parse this config file.
 
-  In order to get this to work we have to set up two major points.
+  Emacs contains the org-mode package, a really powerful tool, which we will
+  discuss later on. For the short: org-mode let's us do exactly, what we want
+  with this configuration. We can document our setting in normal text and have
+  codeblocks which then can be automatically parsed with org-babel.
 
-  - The package manager
-
-    We need the package manager to be functional before executing the code in
-    this configuration file, because my configuration depends on it. At least
-    the manager itself, with the melpa repository set up and use-package need to
-    be running before the rest of the configuration is loaded.
-
-  - The parser for this configuration
-    
-    Emacs contains the org-mode package, a really powerful tool, which we will
-    discuss later on. For the short: org-mode let's us do exactly, what we want
-    with this configuration. We can document our setting in normal text and have
-    codeblocks which then can be automatically parsed with org-babel.
-
-  Resulting of these requirements, our emacs init file needs the following code:
+  Resulting of this requirement, our emacs init file needs the following code:
 
   #+BEGIN_SRC emacs-lisp
-    ;; Put these lines in your "~/.emacs" or "~/.emacs.d/init.el" file.
-    ;; You also have to uncomment and adjust them to the location of the
-    ;; config-file on your system.
+    ;; Put these lines in your "~/.emacs" or "~/.emacs.d/init.el" file.  You also
+    ;; have to uncomment and adjust them to the location of the config-file on your
+    ;; system. If you have multiple files, add them accordingly. I suggest, you use
+    ;; a general config file and one for modifications for your specific system.
 
-    ;; (require 'package)
-    ;; (setq package-enable-at-startup nil)
-    ;; (add-to-list 'package-archives
-    ;;              '("melpa" . "https://melpa.org/packages/"))
-    ;; (package-initialize)
-    ;; (unless (package-installed-p 'use-package)
-    ;;   (package-refresh-contents)
-    ;;   (package-install 'use-package))
-
-    ;; (org-babel-load-file (expand-file-name "~/.config/Emacs/emacs-config.org"))
+    ;; (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+    ;; (org-babel-load-file (expand-file-name "~/.emacs.d/systemconfig.org"))
   #+END_SRC
 
   Without the commands being commented out of course. I have to comment it out
@@ -59,38 +45,15 @@
   the same code blocks over and over again.
 
   Simply copy this text into your personal emacs init file, and remove the
-  leading semicolons from the line =(require 'package)= on.
+  leading semicolons for the line =(org-babel-load-file ...)= or any of your
+  linked files.
 
-  The upper part set's up the package manager, whereas the last line instructs
-  emacs to parse our configuration file. We will discuss most of these settings
-  later on in this configuration without having them active again.
+  I have my configuration file sitting in "~/.emacs.d/config.org" and my GNU
+  Emacs init file is under "~/.emacs.d/init.el". If your paths alter, you might
+  have to change them manually.
 
-  I have my configuration file lying in "~/.config/Emacs/emacs-config.org" and
-  my GNU Emacs init file is under "~/.emacs". If your paths alter, you might
-  have to change them manually in the last line.
-  
   That being done, we now can use this very file for our configuration. You can
-  visit this file in my [[https://github.com/chrugi/Dotfiles/][Github repository]].
-
-  I come from using vim as my main editor, and try to adapt to the
-  emacs-workflow as good as I can. You might as well encounter some parts in my
-  configuration that give you the feeling, that I'm not quite there yet.
-
-* Package Manager
-
-  #+BEGIN_SRC emacs-lisp
-    (require 'package)
-    (require 'cl)
-    (setq package-enable-at-startup nil)
-    (setq package-archives
-	  '(("gnu" . "https://elpa.gnu.org/packages/")
-	    ("melpa" . "https://melpa.org/packages/")
-	    ("org" . "https://orgmode.org/elpa/")))
-    (package-initialize)
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package))
-  #+END_SRC
+  visit this file in my [[https://github.com/chrugi/Emacs/][Github repository]]. So, let's go!
 
 * User Information
 
@@ -103,96 +66,65 @@
     (setq user-mail-address "meli.buehler@gmail.com")
   #+END_SRC
 
-* General
+* Common Lisp Integration
 
-** Packages
+  In order to being able to use common lisp we load the =cl= package.
 
-*** Package Manager
+  #+BEGIN_SRC emacs-lisp
+    (require 'cl)
+  #+END_SRC
 
-    Getting the Package manager running is very important to do as early as
-    possible, since other configuration depends on the individual
-    packages. Therefore these steps should already have taken place as mentioned
-    in the introduction in your emacs init file.
+* Package Manager
 
-    This line loads the package-manager "package" that comes with emacs.
+** GNU Emacs Package Manager
 
-    #+BEGIN_SRC emacs-lisp
-      ;; (require 'package)
-    #+END_SRC
+  The package manager is a tool, that let's us easily install and update
+  additional packages that increase the functionality of our GNU Emacs setup.
 
-    Then we set Emacs up to not automatically enable all the packages at
-    startup.
+  We load it by requiring the manager itself, disable all packages from being
+  loaded at startup, to boost this process and only load them, when we need to,
+  add additional sources for the manager (like the melpa archive or the org-mode
+  repository) and then initialize the manager.
 
-    #+BEGIN_SRC emacs-lisp
-      (setq package-enable-at-startup nil)
-    #+END_SRC
+  #+BEGIN_SRC emacs-lisp
+    (require 'package)
+    (setq package-enable-at-startup nil)
+    (setq package-archives
+	  '(("gnu" . "https://elpa.gnu.org/packages/")
+	    ("melpa" . "https://melpa.org/packages/")
+	    ("org" . "https://orgmode.org/elpa/")))
+    (package-initialize)
+  #+END_SRC
 
-    The official repository of the GNU Emacs project, "elpa", gives us a bunch
-    of packages, but is rather limited. Therefore we setup another repository as
-    well to get our packages from. This repository is called "melpa". You can
-    visit their website [[https://melpa.org/][here]]. You can easily add other repositories as well,
-    using the same syntax. I would recommend to do this in your emacs init file.
+** use-package
 
-    #+BEGIN_SRC emacs-lisp
-      ;; (add-to-list 'package-archives
-      ;;              '("melpa" . "https://melpa.org/packages/"))
-    #+END_SRC
+   The package helper /use-package/ makes it even easier to install and
+   configure other packages. If it is not yet installed we do so. From here on
+   we can use it to ensure every package is installed and configured.
 
-    After setting up the packagemanager, we have to initialize it.
+   #+BEGIN_SRC emacs-lisp
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
+   #+END_SRC
 
-    #+BEGIN_SRC emacs-lisp
-      ;; (package-initialize)
-    #+END_SRC
+** try
 
-*** Package Helper
+   In order to not have to install every package that we might want to try, we
+   install a package called "try", which gives us the ability to temporarely run
+   the package we want to try out, without actually installing it in the system.
 
-    Now, that we have set up the package manager itself, we can introduce
-    several helper packages, which simplify installing, configuring and using
-    other packages.
+   #+BEGIN_SRC emacs-lisp
+     (use-package try
+       :ensure t)
+   #+END_SRC
 
-**** use-package
+   You can then simply try a package with "M-x try" followed by the name of the
+   package.
 
-     "use-package" is a great package helper, since it does allow to check on
-     startup, wheter a package is installed or not, and does not blindfold load
-     all the packages that we might not even use into the memory, and thus
-     significantly speed up the starting process of emacs.
-
-     Since this still is part of the bootstrap, we have this in the .emacs file
-     directly.
-
-     #+BEGIN_SRC emacs-lisp
-       ;; (unless (package-installed-p 'use-package)
-       ;;   (package-refresh-contents)
-       ;;   (package-install 'use-package))
-     #+END_SRC
-
-     This does essentially check, wheter the package already is installed. If
-     not it will update the package list from the different repositories and
-     then install it. From now on use-package itself will give us this
-     functionality, besides some more benefits.
-
-**** try
-
-     Try is the first package that is configured by use-package and is not part
-     of the bootstrap.
-
-     In order to not have to install every package that we might want to try, we
-     install a package called "try", which gives us the ability to temporarely
-     run the package we want to try out, without actually installing it in the
-     system.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package try
-         :ensure t)
-     #+END_SRC
-
-     You can then simply try a package with "M-x try" followed by the name of
-     the package.
-
-     the =:ensure t= part you will meet in almost every package we configure
-     through use-package. It simply means, that use-package will check at
-     boottime whether the package executables are available, and if not will
-     install them.
+   the =:ensure t= part you will meet in almost every package we configure
+   through use-package. It simply means, that use-package will check on launch
+   whether the package executables are available, and if not will install them.
 
 * which-key
 
@@ -841,7 +773,7 @@
 
     The emacs standard syntax for regular expressions kind of sucks. therefore
     we install a package called =pcre2el=
-    
+
     #+BEGIN_SRC emacs-lisp
       (use-package pcre2el
         :ensure t
