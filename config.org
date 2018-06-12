@@ -1,0 +1,86 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: Christian Sangvik
+#+EMAIL: christian.sangvik@gmx.ch
+
+#+STARTUP: content
+
+* Introduction
+
+  Welcome to my GNU Emacs configuration file. The git repository can be found
+  [[https://github.com/chrugi/Emacs][on Github]].
+
+  My effort was to make a readable configuration file for my GNU Emacs, that can
+  be easily portet to other systems, set itself up and leave the user with a
+  better understanding of what does what in this config, and why it is used.
+
+  I come from using vim as my main editor, and try to adapt to the
+  emacs-workflow as good as I can. You will see, I'm not quite there yet. So
+  consider this configuration as work in progress.
+
+  To make this configuration work, we have to set up a special init file for
+  emacs, like "~/.emacs.d/init.el" or "~/.emacs" file. This file normally holds
+  all the configuration for GNU Emacs. But we rather want to link this file
+  which holds my literate configuration and then parse it. We use =org-babel=
+  for that task.
+
+  Resulting of this requirement, our emacs init file needs to hold the following
+  code:
+
+  #+BEGIN_SRC emacs-lisp
+    ;; Put these lines in your "~/.emacs" or "~/.emacs.d/init.el" file.  You also
+    ;; have to uncomment and adjust them to the location of the config-file on your
+    ;; system. If you want to link multiple files, add them accordingly. I suggest,
+    ;; you use a general config file and one for modifications for your specific
+    ;; system.
+
+    ;; (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+    ;; (org-babel-load-file (expand-file-name "~/.emacs.d/systemconfig.org"))
+  #+END_SRC
+
+  Without the commands being commented out of course. I have to comment it out
+  here, since it would render an infinite circle of insertions and executions of
+  the same code blocks over and over again.
+
+  Simply copy this text into your personal emacs init file, and remove the
+  leading semicolons for the line =(org-babel-load-file ...)= or any of your
+  linked files.
+
+  I have my configuration file sitting in "~/.emacs.d/config.org" and my GNU
+  Emacs init file is under "~/.emacs.d/init.el". If your paths alter, you might
+  have to change them manually.
+
+* Package Manager
+
+** GNU Emacs Package Manager
+
+  The package manager is a tool, that let's us easily install and update
+  additional packages that increase the functionality of our GNU Emacs setup. It
+  is important to lad it as early as possible, since most of the rest of the
+  config is setting up different packages.
+
+  We load it by requiring the manager itself, disable all packages from being
+  loaded at startup, to boost this process and only load them, when we need to,
+  add additional sources for the manager (like the melpa archive or the org-mode
+  repository) and then initialize the manager.
+
+  #+BEGIN_SRC emacs-lisp
+    (require 'package)
+    (setq package-enable-at-startup nil)
+    (setq package-archives
+	  '(("gnu" . "https://elpa.gnu.org/packages/")
+	    ("melpa" . "https://melpa.org/packages/")
+	    ("org" . "https://orgmode.org/elpa/")))
+    (package-initialize)
+  #+END_SRC
+
+** use-package
+
+   The package helper /use-package/ makes it even easier to install and
+   configure other packages. If it is not yet installed we do so. From here on
+   we can use it to ensure every package is installed and configured.
+
+   #+BEGIN_SRC emacs-lisp
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
+   #+END_SRC

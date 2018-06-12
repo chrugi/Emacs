@@ -1,0 +1,30 @@
+# Editor files
+\#*\#
+*\~
+
+# Exported
+config.el
+
+# Remoting
+tramp
+
+# Packages
+elpa/*
+
+# History
+recentf
+auto-save-list/*
+ido.last
+
+# Shell
+eshell/*
+
+# Browser
+eww-bookmarks
+
+# General
+ac-comphist.dat
+snippets/*
+thumbs/*
+url/*
+bookmarks
