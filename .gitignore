@@ -4,6 +4,7 @@
 
 # Exported
 config.el
+macosx-yosemite.el
 
 # Remoting
 tramp
