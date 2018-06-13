@@ -49,6 +49,15 @@
   Emacs init file is under "~/.emacs.d/init.el". If your paths alter, you might
   have to change them manually.
 
+* User Information
+
+  Set up our personal information that we don't have to enter every time.
+
+  #+BEGIN_SRC emacs-lisp
+    (setq user-full-name "Christian Sangvik")
+    (setq user-mail-address "christian.sangvik@gmx.ch")
+  #+END_SRC
+
 * Package Manager
 
 ** GNU Emacs Package Manager
