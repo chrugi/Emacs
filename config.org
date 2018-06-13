@@ -58,6 +58,15 @@
     (setq user-mail-address "christian.sangvik@gmx.ch")
   #+END_SRC
 
+* Common Lisp Integration
+
+  In order to being able to use common lisp we load the /cl/ package. This is
+  also used for /org-ref/.
+
+  #+BEGIN_SRC emacs-lisp
+    (require 'cl)
+  #+END_SRC
+
 * Package Manager
 
 ** GNU Emacs Package Manager
