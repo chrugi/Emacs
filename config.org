@@ -1011,11 +1011,23 @@
                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
   #+END_SRC
+
 * Tramp
 
   #+BEGIN_SRC emacs-lisp
     (setq tramp-default-method "ssh")
+    ;;; (setq tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*")
+
+    (setq tramp-terminal-type "tramp")
   #+END_SRC
+
+  Setting the tramp terminal to 'tramp' gives us the opportunity to have a
+  different profile for our shell, when we connect with tramp. Since zsh has
+  some compatibility issues with tramp we set up a profile like listed [[https://www.emacswiki.org/emacs/TrampMode][here]].
+
+  We simply put ~[[[[ TERM == "tramp" ]]]] && unsetopt zle && PS1='$ ' && return~ in
+  our .zshrc file.
+
 
 * Emacs Bell
 
