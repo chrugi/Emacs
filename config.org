@@ -489,7 +489,7 @@
    wombat. So wombat would be my default dark theme.
 
    #+BEGIN_SRC emacs-lisp
-     (load-theme 'wombat t)
+     (load-theme 'tango-dark t)
    #+END_SRC
 
    My personal preferred light theme is dichromacy.
