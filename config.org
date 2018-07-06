@@ -518,7 +518,7 @@
    it.
 
    #+BEGIN_SRC emacs-lisp
-     ;; (setq inhibit-startup-message t)
+     (setq inhibit-startup-message t)
    #+END_SRC
 
 ** Cursor
