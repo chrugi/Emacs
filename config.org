@@ -764,44 +764,34 @@
            (quote
             (("t" "ToDo Task" entry
               (file+headline "~/Documents/org/todo.org" "Capture")
-              (file "~/Templates/org-capture/todo.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/todo.org"))
              ("a" "Appointment" entry
               (file+olp+datetree "~/Documents/org/agenda.org")
-              (file "~/Templates/org-capture/appointment.org")
-              :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/appointment.org"))
              ("n" "Note" entry
               (file+olp+datetree "~/Documents/org/notes.org")
-              (file "~/Templates/org-capture/note.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/note.org"))
              ("j" "Journal" entry
               (file+olp+datetree "~/Documents/org/journal.org")
-              (file "~/Templates/org-capture/journal.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/journal.org"))
              ("v" "Video Reference" entry
               (file+headline "~/Documents/org/references.org" "Video")
-              (file "~/Templates/org-capture/reference-video.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/reference-video.org"))
              ("l" "Link Reference" entry
               (file+headline "~/Documents/org/references.org" "Link")
-              (file "~/Templates/org-capture/reference-link.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/reference-link.org"))
              ("x" "Text Reference" entry
               (file+headline "~/Documents/org/references.org" "Text")
-              (file "~/Templates/org-capture/reference-text.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/reference-text.org"))
              ("m" "Music Reference" entry
               (file+headline "~/Documents/org/references.org" "Music")
-              (file "~/Templates/org-capture/reference-music.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/reference-music.org"))
              ("g" "Generic Reference" entry
               (file+headline "~/Documents/org/references.org" "Generic")
-              (file "~/Templates/org-capture/reference-generic.org")
-              :clock-in :empty-lines-before 1 :empty-lines-after 1)
+              (file "~/Templates/org-capture/reference-generic.org"))
              ("r" "Reference Architecture" entry
               (file+headline "~/Documents/org/references-architecture.org" "Capture")
-              (file "~/Templates/org-capture/architecture.org")
-              :clock-in :empty-lines-before 2 :empty-lines-after 2))))
+              (file "~/Templates/org-capture/architecture.org")))))
    #+END_SRC
 
    By this we have Templates for:
