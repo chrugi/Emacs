@@ -857,6 +857,15 @@
        ("C-x g" . magit-status))
    #+END_SRC
 
+*** Konfiguration
+
+    #+BEGIN_SRC emacs-lisp
+      (setq magit-fetch-arguments (quote ("--prune")))
+      (setq magit-log-arguments (quote ("--graph" "--decorate" "--show-signature" "-n300")))
+      (setq magit-remote-arguments (quote ("-f")))
+      (setq magit-tag-arguments (quote ("--sign")))
+    #+END_SRC
+
 ** Neo tree
 
    Neotree gives us a visual directory tree.
