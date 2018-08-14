@@ -886,6 +886,41 @@
 
 * E-Mail
 
+** Notmuch
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package notmuch)
+   #+END_SRC
+
+*** Konfiguration
+
+    #+BEGIN_SRC emacs-lisp
+      (setq notmuch-saved-searches
+	    (quote
+	     ((:name "Inbox" :query "tag:inbox" :key "i")
+	      (:name "Inread" :query "tag:unread" :key "u")
+	      (:name "Flagged" :query "tag:flagged" :key "f")
+	      (:name "Sent" :query "tag:sent" :key "t")
+	      (:name "Drafts" :query "tag:draft" :key "d")
+	      (:name "All Mail" :query "*" :key "a")
+	      (:name "GMX Mail" :query "to:christian.sangvik@gnx.ch or to:christiansangvik@gmx.ch" :key "g")
+	      (:name "ETH Mail" :query "to sangvikc@student.ethz.ch or to:sangvikc@ethz.ch" :key "e"))))
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp
+      (setq notmuch-tagging-keys
+	    (quote
+	     (("a" notmuch-archive-tags "Archive")
+	      ("u" notmuch-show-mark-read-tags "Mark read")
+	      ("f" ("+flagged") "Flag")
+	      ("s" ("+spam" "-inbox") "Mark as spam")
+	      ("d" ("+deleted" "-inbox") "Delete")
+	      ("i" ("+important") "Important")
+	      ("g" ("+gmx") "GMX Mail")
+	      ("e" ("+eth") "ETH Mail")
+	      ("p" ("private") "priavte"))))
+    #+END_SRC
+
 ** Wanderlust
 
    Wanderlust emacs client.
