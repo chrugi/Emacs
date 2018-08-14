@@ -1,7 +1,7 @@
-#+TITLE: Emacs Configuration
-#+SUBTITLE: An Explanation of my peronal config
+#+TITLE: Chrugi Emacs Configuration
 #+AUTHOR: Christian Sangvik
 #+EMAIL: christian.sangvik@gmx.ch
+
 #+STARTUP: content
 
 * Introduction
