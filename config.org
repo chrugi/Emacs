@@ -903,7 +903,8 @@
 	      (:name "Drafts" :query "tag:draft" :key "d")
 	      (:name "All Mail" :query "*" :key "a")
 	      (:name "GMX Mail" :query "to:christian.sangvik@gnx.ch or to:christiansangvik@gmx.ch" :key "g")
-	      (:name "ETH Mail" :query "to sangvikc@student.ethz.ch or to:sangvikc@ethz.ch" :key "e"))))
+	      (:name "ETH Mail" :query "to sangvikc@student.ethz.ch or to:sangvikc@ethz.ch" :key "e")
+	      (:name "Gutschein" :query "tag:voucher"))))
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp
